@@ -69,8 +69,13 @@ RUN ln -snf /usr/share/zoneinfo/"$TZ" /etc/localtime && \
     mkdir -p /var/crash && \
     chmod 777 /var/crash && \
     echo '<!DOCTYPE html><html lang="en"><title>Jobe</title><h1>Jobe</h1></html>' > /var/www/html/index.html && \
-    git clone https://github.com/apriorit/jobe.git /var/www/html/jobe && \
-    apache2ctl start && \
+    # git clone https://github.com/trampgeek/jobe.git /var/www/html/jobe && \
+    # copy from jobe dir
+    mkdir -p /var/www/html/jobe
+
+COPY ./jobe/ /var/www/html/jobe/
+
+RUN apache2ctl start && \
     cd /var/www/html/jobe && \
     /usr/bin/python3 /var/www/html/jobe/install --max_uid=500 && \
     chown -R ${APACHE_RUN_USER}:${APACHE_RUN_GROUP} /var/www/html && \
