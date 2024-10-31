@@ -55,7 +55,22 @@ RUN ln -snf /usr/share/zoneinfo/"$TZ" /etc/localtime && \
         sqlite3 \
         sudo \
         tzdata \
-        unzip && \
+        unzip \
+        ghc \
+        ghc-prof
+        ghc-doc && \
+	# LU Packages
+	apt-get --no-install-recommends install -yq \
+        texlive-full \
+        python3-pygraphviz \
+	python3-requests \ 
+    	graphviz && \ 
+	
+    python3 -m pip install matplotlib && \
+    python3 -m pip install numpy && \
+    python3 -m pip install pandas && \
+    python3 -m pip install texsoup && \
+    python3 -m pip install scipy && \
     python3 -m pip install pylint && \
     pylint --reports=no --score=n --generate-rcfile > /etc/pylintrc && \
     ln -sf /proc/self/fd/1 /var/log/apache2/access.log && \
